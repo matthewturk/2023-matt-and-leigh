@@ -1,7 +1,7 @@
 import hdf5plugin
 import yt
 
-ds = yt.load("/Dropbox-nvme/orf/Dropbox/research/2022/projects/yt/for_Matt_Turk/mkow075-ens-db620.00790000.nc")
+ds = yt.load("for_Matt_Turk/mkow075-ens-db620.00790000.nc")
 ds.parameters
 
 #s = ds.r[:,:,0.0376].plot("vortmag")
