@@ -9,6 +9,7 @@ s = ds.r[:,0.0,:].plot("vortmag")
 s.set_cmap(("vortmag"),"nipy_spectral")
 s.set_log(("vortmag"),False)
 s.set_zlim(("vortmag"),zmin=(4e-3,"1/s"),zmax=(0.2,"1/s"))
+#ORF not sure making this bigger helps us?
 s.set_buff_size(2000)
 s.set_figure_size(10)
 print(list(s.plots)[0])
@@ -18,5 +19,9 @@ ax=plot.axes
 img=ax.images[0]
 print(img)
 #following does nothing to smooth plot (seems to be pixel based, no interpolation)
-img.set_interpolation("bicubic")
+#This is because yt does its own buffering and some ofthe matplotlib stuff is NOT
+#available. This has to do with the typical highly irregular grid/mesh layout of astrophysics data 
+#img.set_interpolation("bicubic")
+#ORF so there is this mpl_kwargs dpi way to do what we expect, but there is no current way
+#to do nice smooth interpolation. Worry about that later!
 s.save("full.png",mpl_kwargs=dict(dpi=300))
