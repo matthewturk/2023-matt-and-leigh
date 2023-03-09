@@ -1,8 +1,17 @@
 import hdf5plugin
 import yt
 
+print("yt.load:")
 ds = yt.load("for_Matt_Turk/mkow075-ens-db620.00790000.nc")
-ds.parameters
+print("ds.parameters:")
+ds.parameters #ORF note: This displays nothing
+print("ds.print_stats():")
+ds.print_stats()
+#print_stats is good except we should get rid of all Mpc, AU etc and do it in MKS/weather units
+print("ds.field_list:") #This shows nothing! Bad! Should we not get all the vars?
+ds.field_list
+print("ds.derived_field_list:")#Also shows nothing
+ds.derived_field_list
 
 #s = ds.r[:,:,0.0376].plot("vortmag")
 s = ds.r[:,0.0,:].plot("vortmag")
