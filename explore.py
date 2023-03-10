@@ -11,6 +11,9 @@ from yt.visualization.volume_rendering.transfer_functions import (
 
 print("yt.load:")
 ds = yt.load("for_Matt_Turk/mkow075-ens-db620.00790000.nc")
+ds.index
+print('initial', ds.field_info['cm1','dbz'].take_log)
+ds.field_info['cm1', 'dbz'].take_log = False
 print("ds.parameters:")
 ds.parameters #ORF note: This displays nothing
 print("ds.print_stats():")
@@ -57,6 +60,7 @@ normal_vector = [0.0, 1.0, 0.0]
 north_vector = [0.0, 0.0, 1.0]
 
 sc=yt.create_scene(ds, lens_type="perspective",field="winterp")
+sc['source_00'].log_field = False
 print("sc:")
 print (sc)
 source=sc[0]
@@ -71,6 +75,7 @@ source.tfh.plot("transfer_function.png",profile_field="winterp")
 
 cam=sc.add_camera(ds,lens_type="perspective")
 cam.resolution=(3840,2160)
+cam.resolution=(1000,1000)
 cam.position=ds.domain_center+np.array([20,-80,23.0])*yt.units.kilometer
 cam.switch_orientation(normal_vector=normal_vector, north_vector=north_vector)
 cam.focus=ds.domain_center +np.array([0,0,0.0])*yt.units.kilometer
@@ -78,6 +83,7 @@ sc.annotate_axes()
 sc.annotate_domain(ds,color=[1,1,1,0.5])
 sc.camera.set_width(ds.quan(60,"km"))
 im=sc.render()
+print('logging: ', sc['source_00'].log_field)
 sc.save("full-volume-dbz.png",sigma_clip=2.0)
 
 '''
